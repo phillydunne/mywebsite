@@ -64,7 +64,7 @@ function test_input($data) {
 }
 ?>
 
-<h2>PHP Form Validation Example</h2>
+<h1>Form Submission Webpage</h1>
 <p><span class="error">* required field</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
 
@@ -97,32 +97,48 @@ function test_input($data) {
 <?php
 //Outputs the form values back to the user
 echo "<h2>Your Input:</h2>";
-echo $name;
-echo "<br>";
-echo $email;
-echo "<br>";
-echo $website;
-echo "<br>";
-echo $comment;
-echo "<br>";
-echo $gender;
+
+if (!empty($name)) {
+  echo 'name: ' . $name;
+  echo "<br>";
+}
+  
+if (!empty($email)) {
+  echo 'email: ' . $email;
+  echo "<br>";
+}
+
+if (!empty($website)) {
+  echo 'website: ' . $website;
+  echo "<br>";
+}
+
+if (!empty($comment)) {
+  echo 'comment: ' . $comment;
+  echo "<br>";
+}
+
+if (!empty($gender)) {
+  echo 'gender: ' . $gender;
+  echo "<br>";
+}
+
+echo '<br><br>'
 ?>
 
 
 <!-- Submit the values to another page for processing if there are no errors -->
 <?php 
-  
-  // include 'submit_database.php'
-  
-/*  if ($nameErr == "") {  
-    submit_form($_POST["name"], $_POST["email"], $_POST["website"], $_POST["comment"], $_POST["gender"]);
-      }
-*/
-//Ensure this executes after the validation block
+echo "<h2>Submit Data to the Database function:</h2>";
+
+include 'submit_database.php';
+
+//Ensure this executes after the validation block. This first If checks if the page has been submitted first - basically it checks if the submit event has taken place. Without this you would have to say If (variable <> Empty) AND if variableErr ="".
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // if ($nameErr == $emailErr == $websiteErr == $genderErr == "") {
-  if (empty($nameErr)) {
+  if (empty($nameErr) AND empty($genderErr) AND empty($emailErr)) {
     echo "Inner If: The POST method has been invoked, and there are no errors - you can put your code in here now";
+    submit_form($_POST["name"], $_POST["email"], $_POST["website"], $_POST["comment"], $_POST["gender"]);
   } else {
     echo "Inner Else: The POST method has been invoked, BUT there are errors";
     }
@@ -130,6 +146,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Outer Else: The POST method has NOT invoked";
 
   }
+
+
+
+  
+
 
 
 ?>
