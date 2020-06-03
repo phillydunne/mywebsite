@@ -1,0 +1,2 @@
+#ignore config with environment variables
+config.txt

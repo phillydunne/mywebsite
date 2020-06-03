@@ -13,11 +13,15 @@ function submit_form($name, $email, $gender, $comment, $website) {
 	//Database connection
 	$servername = "localhost";
 	$username = "root";
-	$password = "";
 	$dbname = "test";
 
+	//read in database credentials
+	$dbpassword = fopen("config.txt", "r") or die("unable to open file");
+	$dbpassword = fread($dbpassword, filesize("config.txt"));
+
+
 	// Create connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
+	$conn = new mysqli($servername, $username, $dbpassword, $dbname);
 
 	// Check connection
 	if ($conn->connect_error) {
