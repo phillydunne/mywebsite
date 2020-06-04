@@ -131,25 +131,38 @@ echo '<br><br>'
 <?php 
 echo "<h2>Submit Data to the Database function:</h2>";
 
-include 'submit_database.php';
+// include a function which connects to the database and returns the database connection ?object
+include 'database_connect.php';
+
+// define the target database. The database server, database username and database password and specified in the function.
+$dbname="test";
 
 //Ensure this executes after the validation block. This first If checks if the page has been submitted first - basically it checks if the submit event has taken place. Without this you would have to say If (variable <> Empty) AND if variableErr ="".
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // if ($nameErr == $emailErr == $websiteErr == $genderErr == "") {
+
   if (empty($nameErr) AND empty($genderErr) AND empty($emailErr)) {
     echo "Inner If: The POST method has been invoked, and there are no errors - you can put your code in here now";
-    submit_form($_POST["name"], $_POST["email"], $_POST["website"], $_POST["comment"], $_POST["gender"]);
+    
+    $conn = database_connect($dbname);
+
+    $sql = "INSERT INTO `person` (`name`, `gender`, `email`) VALUES ('$name', '$gender', '$email')";
+
+    if($conn->query($sql) === TRUE) {
+      echo "<br>New record created successfully!<br>";
+      } else {
+      echo "<br>Error: " . $conn->error;
+      }
+
+    $conn->close(); 
+
   } else {
-    echo "Inner Else: The POST method has been invoked, BUT there are errors";
+    echo "Inner Else: The POST method has been invoked, BUT there are errors in the inputs";
     }
   } else {
-    echo "Outer Else: The POST method has NOT invoked";
+    echo "Outer Else: The POST method has NOT invoked - the page hasnt been submitted yet";
 
   }
-
-
-
-  
 
 
 
