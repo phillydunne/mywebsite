@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn = database_connect($dbname);
     
-    $sql = "SELECT password FROM user where `email` = '$email'";
+    $sql = "SELECT password FROM users where `email` = '$email'";
 
     $result = $conn->query($sql);
 
