@@ -16,6 +16,16 @@ class PrivilegedUser extends User
         $conn = database_connect($dbname);
         $sql = "SELECT * FROM users WHERE email = '$username'";
         $result = $conn->query($sql);
+
+        // DEBUG
+	    echo "Vardump of result: " . var_dump($result) . "<br>";
+	    if (empty($result)) {
+	    	echo "<br>Variable 'result' is empty<br>";
+	    } else {
+	    	echo "<br>Variable 'result' is NOT empty<br>";
+	    }
+
+
         $row = $result->fetch_assoc();
         $num_rows = $result->num_rows;
         // DEBUG var_dump($result);
@@ -28,6 +38,7 @@ class PrivilegedUser extends User
 
         //AND (($result->num_rows) =1)
 
+        // I Dont believe this will ever equate to false unless the sql fails to execute perhaps - if it returns zero rows it will still equate to true
         if (!empty($result)) {
             $privUser = new PrivilegedUser();
             $privUser->user_id = $row["user_id"]; //$result[0]["user_id"];

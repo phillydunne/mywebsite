@@ -20,6 +20,36 @@ $conn = database_connect($dbname);*/
 
 session_start();
 
+// Session testing
+print_r("session 1: " . session_id() . "<br>");
+
+//session_regenerate_id();
+
+//print_r("session 2: " . session_id() . "<br>");
+
+$_SESSION["timeout"]=time();
+
+$inactive_time = 600; // ?seconds 
+if (isset($_SESSION["timeout"])) {
+	$time_delta = time() - $_SESSION["timeout"];
+	if ($time_delta > $inactive_time) {
+		session_destroy();
+		header("Location: / logout.php");
+	}
+}
+
+// Session testing part 2 - how many times have you been logged in
+if (!isset($_SESSION["visits"])) {
+	$_SESSION["visits"] = 1;
+} else {
+	echo "<br><br>you have visited this page " . $_SESSION["visits"]++ . " times!<br><br>";
+}
+
+//session_unset();
+
+
+//$_SESSION["loggedin"]=
+
 // set test parameters
 $set_permission = "view_dashboard";
 
