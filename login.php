@@ -98,7 +98,7 @@ echo '<br><br>'*/
 
 <!-- Submit the values to another page for processing if there are no errors -->
 <?php 
-echo "<h2>Submit Data to the Database function:</h2>";
+//echo "<h2>Submit Data to the Database function:</h2>";
 
 // include a function which connects to the database and returns the database connection ?object
 include 'database_connect.php';
@@ -154,10 +154,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      
 
   } else {
-    echo "Inner Else: The POST method has been invoked, BUT there are errors";
+    //DEBUG echo "Inner Else: The POST method has been invoked, BUT there are errors";
     }
   } else {
-    echo "Outer Else: The POST method has NOT invoked";
+    //DEBUG echo "Outer Else: The POST method has NOT invoked";
 
   }
 

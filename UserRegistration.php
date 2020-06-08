@@ -72,6 +72,9 @@ function test_input($data) {
 ?>
 
 <h1>User Registration</h1>
+<p>You can register as a user here, allowing you to then login. An admin will receive a notification and then assign you to the correct role</p>
+<a href="Login.php">Proceed to the login page</a>
+
 <p><span class="error"></span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
 

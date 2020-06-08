@@ -28,6 +28,7 @@ class PrivilegedUser extends User
 
         $row = $result->fetch_assoc();
         $num_rows = $result->num_rows;
+
         // DEBUG var_dump($result);
 
         echo "<br> Number of rows: " . $num_rows . "<br>";
@@ -41,10 +42,11 @@ class PrivilegedUser extends User
         // I Dont believe this will ever equate to false unless the sql fails to execute perhaps - if it returns zero rows it will still equate to true
         if (!empty($result)) {
             $privUser = new PrivilegedUser();
-            $privUser->user_id = $row["user_id"]; //$result[0]["user_id"];
-            $privUser->username = $username;
-            $privUser->password = $row["password"]; // $result[0]["password"];
-            $privUser->email_addr = $row["email"]; // $result[0]["email_addr"];
+            $privUser->user_id = $row["user_id"];
+            $privUser->firstname = $row["firstname"];
+            $privUser->lastname = $row["lastname"];
+            $privUser->email = $row["email"];
+            $privUser->password = $row["password"]; 
             echo $privUser->user_id;
             $privUser->initRoles($privUser->user_id);
             return $privUser;
@@ -75,6 +77,7 @@ class PrivilegedUser extends User
         /*$sth = $GLOBALS["DB"]->prepare($sql);
         $sth->execute(array(":user_id" => $this->user_id));*/
 
+        // checks which permissions are associated with each role returned in the sql query. It does this by looping through each row returned by the sql query, setting the key of the roles array to role_name of each row returned, and then calling the getRolePerms function of the Role class to populate the value. The value will be an ?array/object which contains a key (perm_desc) and a value (true), listing each permission associated with each role passed to it. ? a new role object is created each loop.
         while($row = $result->fetch_assoc()) {
             $this->roles[$row["role_name"]] = Role::getRolePerms($row["role_id"]);
         //var_dump($roles);
@@ -82,6 +85,7 @@ class PrivilegedUser extends User
     }
 
     // check if user has a specific privilege
+    // loops through the role array and checks if 
     public function hasPrivilege($perm) {
         foreach ($this->roles as $role) {
             if ($role->hasPerm($perm)) {

@@ -21,7 +21,7 @@ $conn = database_connect($dbname);*/
 session_start();
 
 // Session testing
-print_r("session 1: " . session_id() . "<br>");
+print_r("session : " . session_id() . "<br>");
 
 //session_regenerate_id();
 
@@ -53,7 +53,7 @@ if (!isset($_SESSION["visits"])) {
 // set test parameters
 $set_permission = "view_dashboard";
 
-//read in database credentials
+//read in user credentials
 $set_email = fopen("test_config.txt", "r") or die("unable to open test_config.txt");
 $set_email = fread($set_email, filesize("test_config.txt"));
 
@@ -72,12 +72,12 @@ $u = PrivilegedUser::getByUsername("$set_email");
 // DEBUG echo "The variable u is of type (we want it to be an object): " . gettype($u);
 if(gettype($u)=="object") {
     if ($u->hasPrivilege($set_permission)) {
-        echo "<br> user " . $u->username . " has this permission: " . $set_permission;
+        echo "<br> user " . $u->email . " has this permission: " . $set_permission;
     } else {
-        echo "<br> user " . $u->username . " does not have permission " . $set_permission;
+        echo "<br> user " . $u->email . " does not have permission " . $set_permission;
     }
 } else {
-    echo "The user object instance is not an object, it is likely a bool";
+    echo "The user object instance is not an object, it is likely a bool - the getByUsername function call returned a bool";
 }
 
 ?>
