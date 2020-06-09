@@ -11,7 +11,8 @@
 
 session_start();
 
-include "Role.php";
+require_once "role.php";
+require_once "database_connect.php";
 
 
 // define variables and set to empty values

@@ -8,6 +8,11 @@
 <body>  
 
 <?php
+
+require_once "privilegeduser.php";
+require_once "role.php";
+require_once "database_connect.php";
+
 // define variables and set to empty values
 $emailErr = $passwordErr = "";
 $email = $password = "";
@@ -39,6 +44,7 @@ function test_input($data) {
   return $data;
 }
 ?>
+
 
 
 <!--Here is the HTML -->
@@ -98,60 +104,40 @@ echo '<br><br>'*/
 
 <!-- Submit the values to another page for processing if there are no errors -->
 <?php 
-//echo "<h2>Submit Data to the Database function:</h2>";
-
-// include a function which connects to the database and returns the database connection ?object
-include 'database_connect.php';
-
-// define the target database. The database server, database username and database password and specified in the function.
-$dbname="test";
-
 //Ensure this executes after the validation block. This first If checks if the page has been submitted first - basically it checks if the submit event has taken place. Without this you would have to say If (variable <> Empty) AND if variableErr ="".
-
-
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (empty($emailErr) AND empty($passwordErr) ) {
-    //debugger: echo "Inner If: The POST method has been invoked, and there are no errors - you can put your code in here now";
 
-    $conn = database_connect($dbname);
-    
-    $sql = "SELECT password FROM users where `email` = '$email'";
-
-    $result = $conn->query($sql);
-
-    echo "<br> Number of rows returned:" . $result -> num_rows;
-
-    //echo "result value is :" . $result . " <br>"; 
-
-    //if($result->num_rows == 1) {
-    if(($result == TRUE) and ($result->num_rows == 1)) {
-      echo "<br>Record read successfully and there is only one result!<br>";
+    // attempt to authenticate the user, returns true if user authentication flag has been updated, false if not.
+    if (PrivilegedUser::authenticateUser($email, $password)==TRUE) {
+      echo "<br>User " . $email . " has been authenticated!<br>";
       
-      // fetches a result row as an associative array into the variable $row
-      $row = $result-> fetch_assoc();
-
-      // assigns the hashed password returned from the database to a variable
-      $db_hashed_password = $row["password"];
+      // set timeout session variable to the current time
+      $_SESSION["timeout"]=time();
       
-      // temporary - hashes the password so that i can unit test it with manually entered data in the db
-      echo "<p> The hashed version of your entered password is: " . password_hash($password, PASSWORD_DEFAULT) . "</p>";
-      echo "<p> The hashed version of your stored password is: " . $db_hashed_password . "</p>";
+      // check if the user has a specific privilege and then take action.
+      $set_permission = "all_permissions";
+      $u = PrivilegedUser::getByUsername("$email");
+      if(gettype($u)=="object") {
+        if ($u->hasPrivilege($set_permission)) {
+          echo "<br> user " . $u->email . " has this permission: " . $set_permission;
+            header("Location: dashboard.php");
+        } else {
+          echo "<br> user " . $u->email . " does not have permission " . $set_permission;
+        }
 
-      // verifies the password entered by the user against the password retrieved from the database
-      if(password_verify($password, $db_hashed_password)) {
-        echo "<br> Password verified! Welcome back " . $email . "<br>";
       } else {
+    echo "The user object instance is not an object, it is likely a bool - the getByUsername function call returned a bool";
+}
 
-        echo "<br><p> Your password does not match the one on record :( </p><br>";
-      }
 
-     } else {
-     echo "<br>Error: This email is not on record (or more than one password was returned for this email - unlikely)" . $conn->error;
-     }
-     
+    } else { 
+      echo "<br>Authentication failed :(<br>"; 
+    }
+
 
   } else {
     //DEBUG echo "Inner Else: The POST method has been invoked, BUT there are errors";

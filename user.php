@@ -29,7 +29,6 @@ class User
     $this->email=$email;
     $this->password=$hashed_password;
 
-    include 'database_connect.php';	
 	$dbname="test";
 	$conn = database_connect($dbname);
 
@@ -56,18 +55,18 @@ class User
 
     if(($result->num_rows)>=1) {
     	echo "This Email is Already Registered";
+        $conn->close();
     	die();
     } else {
     	$sql = "INSERT INTO users (email, password, firstname, lastname) VALUES ('$email', '$hashed_password', '$firstname', '$lastname')";
 
 	    if($conn->query($sql) === TRUE) {
 	      echo "<br>New user created successfully!<br>";
+          $conn->close();
 	      } else {
 	      echo "<br>Error: " . $conn->error;
+          $conn->close();
 	      }
-
-	    $conn->close(); 
-
     }
 
 

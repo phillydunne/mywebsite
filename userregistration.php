@@ -11,7 +11,8 @@
 
 session_start();
 
-include "User.php";
+require_once "user.php";
+require_once "database_connect.php";
 
 
 // define variables and set to empty values

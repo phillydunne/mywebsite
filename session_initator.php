@@ -94,4 +94,47 @@ class PrivilegedUser extends User
         }
         return false;
     }
+
+
+    public static function authenticateUser($email, $password) {include 'database_connect.php';
+        $dbname="test";
+        $conn = database_connect($dbname);
+        $sql = "SELECT password FROM users where `email` = '$email'";
+        $result = $conn->query($sql);
+
+        if(($result == TRUE) and ($result->num_rows == 1)) {
+            echo "<br>Record read successfully and there is only one result!<br>";
+      
+            // fetches a result row as an associative array into the variable $row
+            $row = $result-> fetch_assoc();
+            $db_hashed_password = $row["password"];
+
+          // temporary - hashes the password so that i can unit test it with manually entered data in the db
+          // DEBUG echo "<p> The hashed version of your entered password is: " . password_hash($password, PASSWORD_DEFAULT) . "</p>";
+          // DEBUG echo "<p> The hashed version of your stored password is: " . $db_hashed_password . "</p>";
+
+            if(password_verify($password, $db_hashed_password)) {
+                echo "<br> Password verified! Welcome back " . $email . "<br>";
+
+                // update user authorised flag ? add check to see if there is more than one record returned?
+                $sql = "UPDATE users SET authenticated=1 WHERE email = '$email'";
+                
+                if($conn->query($sql) === TRUE) {
+                    echo "<br>User updated successfully!<br>";
+                } else {
+                    echo "<br>Error: " . $conn->error;
+                }
+
+
+            } else {
+
+                echo "<br><p> Your password does not match the one on record :( </p><br>";
+            }
+
+        } else {
+             echo "<br>Error: This email is not on record (or more than one password was returned for this email - unlikely)" . $conn->error;
+        }
+    }
+
+
 }

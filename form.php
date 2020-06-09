@@ -150,11 +150,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($conn->query($sql) === TRUE) {
       echo "<br>New record created successfully!<br>";
+      $conn->close();
+
       } else {
       echo "<br>Error: " . $conn->error;
+      $conn->close(); 
       }
 
-    $conn->close(); 
+    
 
   } else {
     echo "Inner Else: The POST method has been invoked, BUT there are errors in the inputs";

@@ -8,14 +8,9 @@
 <body>  
 
 <?php
-require_once "Role.php";
-require_once "PrivilegedUser.php";
-
-// connect to database...
-// ...
-/*include 'database_connect.php';
-$dbname="test";
-$conn = database_connect($dbname);*/
+require_once "role.php";
+require_once "privilegeduser.php";
+require_once "database_connect.php";
 
 
 session_start();
@@ -51,7 +46,7 @@ if (!isset($_SESSION["visits"])) {
 //$_SESSION["loggedin"]=
 
 // set test parameters
-$set_permission = "view_dashboard";
+$set_permission = "all_permissions";
 
 //read in user credentials
 $set_email = fopen("test_config.txt", "r") or die("unable to open test_config.txt");

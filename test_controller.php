@@ -25,8 +25,11 @@
 
 <footer>
 <?php
-$lastUpdated = "08/06/2020 14:54:00";
-echo "<br>" . "This page was last updated on " . $lastUpdated;
+$lastUpdated = "06/08/2020 14:54:00"; // American notation
+$convertedTime =  strtotime($lastUpdated);
+// DEBUG echo "<br>Time value:" . time() . "<br>";
+// DEBUG echo "Last updated value:" . $convertedTime . "<br>";
+echo "<br><i>" . "This page was last updated on $lastUpdated, " . round(((time() - $convertedTime)/(60*60)))   . " hours ago</i>";
 ?>
 </footer>
 </html>
