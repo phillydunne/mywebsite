@@ -115,8 +115,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (PrivilegedUser::authenticateUser($email, $password)==TRUE) {
       echo "<br>User " . $email . " has been authenticated!<br>";
       
-      // set timeout session variable to the current time
+      // start the session
+      session_start();
+
+      // set fout session variable to the current time
       $_SESSION["timeout"]=time();
+
+      // set the email session variable
+      $_SESSION["email"]=$email;
+
+      // ? i suppose i could just keep whether a user is authenticated in a session variable too. couldnt really keep a list of roles and permissions though. Although was the intention to keep the PrivUser object through the application? 
+      
       
       // check if the user has a specific privilege and then take action.
       $set_permission = "all_permissions";

@@ -7,13 +7,25 @@
 </head>
 <body>  
 
-
 <h1>Logout Page</h1>
-<p>Your session has expired and you have been logged out. <?php echo "Click here to "?></p>
-<a href="Login.php">return to the Login Page</a>
 
 <?php
+session_start();
+require_once "database_connect.php";
+require_once "privilegeduser.php";
 
-echo "<br><br> See ya later alligator! :) <br>";
+if (isset($_SESSION["email"])) {
+	if (PrivilegedUser::unAuthenticateUser($_SESSION["email"]) && session_destroy()) {
+		echo "<p>Logout completed successfully. Have a nice day :)<p>";
+	} else {
+		echo "<p>WARNING: to logger, this user has not been logged out successfully - highest priority.</p>";
+	}
+} else {
+
+}
+
 
 ?>
+
+<br>Click here to proceed to the 
+<a href="Login.php"> Login Page</a>

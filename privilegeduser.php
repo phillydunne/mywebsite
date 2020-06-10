@@ -9,22 +9,22 @@ class PrivilegedUser extends User
     }
 
     // override User method
-    public static function getByUsername($username) {
+    public static function getByUsername($email) {
  
         //include 'database_connect.php';
         $dbname="test";
         $conn = database_connect($dbname);
-        $sql = "SELECT * FROM users WHERE email = '$username'";
+        $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = $conn->query($sql);
         $conn->close();
 
         // DEBUG
-	    echo "Vardump of result: " . var_dump($result) . "<br>";
+/*	    echo "Vardump of result: " . var_dump($result) . "<br>";
 	    if (empty($result)) {
 	    	echo "<br>Variable 'result' is empty<br>";
 	    } else {
 	    	echo "<br>Variable 'result' is NOT empty<br>";
-	    }
+	    }*/
 
 
         $row = $result->fetch_assoc();
@@ -32,7 +32,7 @@ class PrivilegedUser extends User
 
         // DEBUG var_dump($result);
 
-        echo "<br> Number of rows: " . $num_rows . "<br>";
+        // DEBUG echo "<br> Number of rows: " . $num_rows . "<br>";
 
         /*$sth = $GLOBALS["DB"]->prepare($sql);
         $sth->execute(array(":username" => $username));
@@ -48,7 +48,6 @@ class PrivilegedUser extends User
             $privUser->lastname = $row["lastname"];
             $privUser->email = $row["email"];
             $privUser->password = $row["password"]; 
-            echo $privUser->user_id;
             $privUser->initRoles($privUser->user_id);
             return $privUser;
         } else {
@@ -108,7 +107,7 @@ class PrivilegedUser extends User
         $result = $conn->query($sql);
 
         if(($result == TRUE) and ($result->num_rows == 1)) {
-            echo "<br>Record read successfully and there is only one result!<br>";
+            // DEBUG echo "<br>Record read successfully and there is only one result!<br>";
       
             // fetches a result row as an associative array into the variable $row
             $row = $result-> fetch_assoc();
@@ -148,6 +147,47 @@ class PrivilegedUser extends User
 
     }
 
+// returns true if user is authenticated, returns false if unable to determine.
+public static function isAuthenticated($email) {
+    // include 'database_connect.php';
+
+    $dbname="test";
+    $conn = database_connect($dbname);
+    $sql = "SELECT authenticated FROM users where `email` = '$email'";
+    $result = $conn->query($sql);
+    $conn->close();
+
+    if(($result == TRUE) and ($result->num_rows == 1)) {
+        //echo "<br>Record read successfully and there is only one result!<br>";
+        $row=$result->fetch_assoc();
+        return $row["authenticated"];
+    } elseif (($result == TRUE) and ($result->num_rows > 1)) {
+        echo "WARNING: there is more than one record with that email address.";
+    } else {
+        return FALSE;
+    }
+
+}
+
+//returns TRUE is user has been unauthenticated successfully. FALSE if this is not the case.
+public static function unAuthenticateUser($email) {
+        // include 'database_connect.php';
+        $dbname="test";
+        $conn = database_connect($dbname);
+        $sql = "UPDATE users SET authenticated=0 WHERE email = '$email'";
+        $result = $conn->query($sql);
+        $conn->close();
+
+        if(($result == TRUE)) {
+            // echo "<br>User auth status updated successfully<br>";
+            return TRUE;
+        } else {
+            echo "<br>Error: " . $conn->error;
+            return FALSE;
+        }
+
+    }
+
 
 /*    // function: STUB
     public static function timeoutUser($email, $password) {include 'database_connect.php';
@@ -158,7 +198,7 @@ class PrivilegedUser extends User
         $conn->close();
 
         if(($result == TRUE) and ($result->num_rows == 1)) {
-            echo "<br>Record read successfully and there is only one result!<br>";
+            // echo "<br>Record read successfully and there is only one result!<br>";
         }
          
     }*/

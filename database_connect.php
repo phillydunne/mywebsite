@@ -20,7 +20,7 @@ function database_connect($dbname) {
 	if ($conn->connect_error) {
 	  die("Connection failed: " . $conn->connect_error);
 	}
-	echo "<br><br>Connected successfully";
+	// DEBUG echo "<br><br>Connected successfully";
 
 	return $conn;
 
