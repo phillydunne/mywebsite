@@ -25,32 +25,7 @@ if (isset($_SESSION["email"])) {
 
     require_once "session_handler.php";
 
-    echo "
-    <!DOCTYPE HTML>  
-    <html>
-    <head>
-    <style>
-    <!--.error {color: #FF0000;}-->
-    .button {
-      border: none;
-      color: black;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-    }
-
-    .button1 {background-color: #4CAF50;} /* Green */
-    .button2 {background-color: #008CBA;} /* Blue */
-    </style>
-    </head>
-    <body>  
-    <h1>Dashboard</h1>
-    </body>
-    ";
+    include __DIR__ . "/../../templates/dashboard.html.php";
 
     // Put in user specific content etc.
 
@@ -65,17 +40,6 @@ if (isset($_SESSION["email"])) {
       
         }
     }
-
-    // Next actions for the user
-    echo "
-        <h2>What would you like to do?</h2>
-        <form method=POST action='newquote.php'>
-            <input type='submit' name='new_quote' value='Create a New Quote'>
-        </form>
-        <button class='button button1' onclick='myFunction()' id='button1'>Logout</button>
-    ";
-
-
 
     } else {
         echo "<h1>Permission Denied to this page. </h1>";
