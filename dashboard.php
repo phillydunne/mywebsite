@@ -5,6 +5,10 @@ require_once "database_connect.php";
 require_once "privilegeduser.php";
 require_once "role.php";
 
+//initalise
+$title="";
+$output="";
+
 /*set once before calling session_handler. 
 1. if you are on a page and come back quite a bit later, after your timeout session variable has expired, we dont want to reset your variable value to the current time. We want you to be logged out.
 
@@ -12,50 +16,51 @@ require_once "role.php";
 
 */
 
-// do we need soemthing here that will check if you are authenticated and authorised to see this page? I suppose the only things allowing us to maintain state right now are session variables, and the database. 
+// do we need something here that will check if you are authenticated and authorised to see this page? I suppose the only things allowing us to maintain state right now are session variables, and the database. 
 
 if (isset($_SESSION["email"])) {
     if (PrivilegedUser::isAuthenticated($_SESSION["email"])) {
 
-        // this checks timeout
-/*        if (!isset($_SESSION["timeout"])) {
-            $_SESSION["timeout"]=time();
-            // this assumes that PHP wont just get rid of this session variable value because you havent use the system for a while for example.  
-        }*/
-
-    require_once "session_handler.php";
-
-    include __DIR__ . "/../../templates/dashboard.html.php";
+    require_once "session_handler.php"; // returns output of the session text
 
     // Put in user specific content etc.
 
-    echo "<p>Welcome back! Here is all of the information that we have on you. </p>
-    ";
+    //echo "<p>Welcome back! Here is all of the information that we have on you. </p>";
 
     $user = PrivilegedUser::getByUsername($_SESSION['email']);
 
-    foreach($user as $key => $value) {
-        if ($key != "password") {
-            echo "$key: $value<br>";
+    // This is the part that he wanted to put into the template
+    // foreach($user as $key => $value) {
+    //     if ($key != "password") {
+    //         $output = $output . "<p>$key: $value</p>";
       
-        }
-    }
+    //     }
+    // }
+
+    ob_start();
+
+    include __DIR__ . "/../../templates/dashboard.html.php";
+
+    $output = $output . ob_get_clean();
+
 
     } else {
-        echo "<h1>Permission Denied to this page. </h1>";
+        $output = "<h1>Permission Denied to this page. </h1>";
+        header("Location: logout.php");
         //email session variable is set, but has not been authenticated - is this even possible? At the moment the email session variable is set just after successful authentication.
     }
 } else {
-    echo "<h1>Permission Denied to this page. </h1>";
+    $output = "<h1>Permission Denied to this page. </h1>";
+    header("Location: logout.php");
     //email session variable is not set - they have not been authenticated.
     // good to build in a way to check if the user is authenticated at all just in case.
 }
 
+$title="Dashboard";
+
+// Now we have our $title and $output variables set and we can "submit" them to the standard html format template.
+include __DIR__ . "/../../templates/layout.html.php";
+
 ?> 
 
-<!-- Javascript to act on button click password -->
-<script>
-function myFunction() {
-  window.location.href = "logout.php";
-}
-</script>
+<!-- Javascript to act on button click -->

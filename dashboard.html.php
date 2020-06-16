@@ -1,9 +1,3 @@
-<!DOCTYPE HTML>  
-<html>
-	<head>
-		<title>Sandbox Page</title>
-		<!-- <link rel="stylesheet" href="form.css" /> -->
-		<meta charset="utf-8">
 		<style>
 			.error {color: #FF0000;}
 		    .button {
@@ -21,11 +15,52 @@
 		    .button1 {background-color: #4CAF50;} /* Green */
 		    .button2 {background-color: #008CBA;} /* Blue */
 		</style>
-	<body>  
-        <h2>What would you like to do?</h2>
+
+       	<?php foreach($user as $key => $value) {
+       		if ($key != "password") {
+       	 ?>
+       	<blockquote>
+			<p>
+			<?=htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . ": " . htmlspecialchars($value, ENT_QUOTES, 'UTF-8')?>
+			</p>
+		</blockquote>
+		<?php } } ?>
+
+		<h3>What would you like to do next?</h3>
         <form method=POST action='newquote.php'>
             <input type='submit' name='new_quote' value='Create a New Quote'>
         </form>
         <button class='button button1' onclick='myFunction()' id='button1'>Logout</button>
 
+
+
+		<script>
+		function myFunction() {
+  			window.location.href = "logout.php";
+		}
+		</script>
+        
+<!--        		Seconds remaining: <p id="timer"></p>
+       	<script>
+       			var tLimit=600; //has to be the same as the php value. Wonder how you can do that?
+
+       			var myVar = setInterval(countDown(tLimit,1000);
+
+       			function countDown() {
+       				for (t=tLimit, t=0, t--) {
+       					document.getElementById("timer").innerHTML = t;
+       				}	
+       			}
+       			
+
+
+				function myTimer() {
+				var d = new Date();
+				document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+	}
+
+       	</script> -->
+
 	</body>
+
+	

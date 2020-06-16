@@ -1,13 +1,29 @@
 <?php
 
-echo "<p>the current working directory is: " . __DIR__ . "</p>";
+// Database testing
+/*include "database_connect_pdo.php";
+$db_name="test";
+$pdo=database_connect_pdo($db_name);*/
 
-echo "<p>one level up is " . "../" . __DIR__ . "</p>";
 
-include __DIR__ . "/../../templates/test.php";
 
 ?>
 
+ <!-- Javascript timer testing: this should really be in a .html.php file -->
+
+<p>A script on this page runs this clock:</p>
+<p id="demo"></p>
+
+<script>
+	var myVar = setInterval(myTimer,1000);
+
+	function myTimer() {
+		var d = new Date();
+		document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+	}
+	
+	
+</script>
 
 
 
