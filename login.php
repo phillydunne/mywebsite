@@ -14,6 +14,9 @@ require_once "role.php";
 require_once "database_connect.php";
 
 // define variables and set to empty values
+$title="";
+$output="";
+
 $emailErr = $passwordErr = "";
 $email = $password = "";
 
@@ -156,6 +159,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   }
 
+
+$title = "Login";
+include __DIR__ . "/../../templates/layout_alt.html.php";
 
 
 ?>

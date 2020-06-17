@@ -16,21 +16,29 @@
 		    .button2 {background-color: #008CBA;} /* Blue */
 		</style>
 
-       	<?php foreach($user as $key => $value) {
-       		if ($key != "password") {
-       	 ?>
-       	<blockquote>
-			<p>
-			<?=htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . ": " . htmlspecialchars($value, ENT_QUOTES, 'UTF-8')?>
-			</p>
-		</blockquote>
-		<?php } } ?>
+		<div>
+			<table>
+				<tr>
+					<th>Field</th>
+					<th>Value</th>
+				</tr>
+				<?php foreach($user as $key => $value) {
+       				if ($key != "password") { ?>
+				<tr>
+					<td><?=$key?></td>
+					<td><?=$value?></td>
+				</tr>
+				<?php } } ?>
+			</table>
+		</div>
 
-		<h3>What would you like to do next?</h3>
-        <form method=POST action='newquote.php'>
-            <input type='submit' name='new_quote' value='Create a New Quote'>
-        </form>
-        <button class='button button1' onclick='myFunction()' id='button1'>Logout</button>
+		<div>
+			<h3>What would you like to do next?</h3>
+	        <form method=POST action='newquote.php'>
+	            <input type='submit' name='new_quote' value='Create a New Quote'>
+	        </form>
+	        <button class='button button1' onclick='myFunction()' id='button1'>Logout</button>
+	    </div>
 
 
 
