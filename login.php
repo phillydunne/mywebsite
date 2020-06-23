@@ -1,12 +1,3 @@
-<!DOCTYPE HTML>  
-<html>
-<head>
-<style>
-.error {color: #FF0000;}
-</style>
-</head>
-<body>  
-
 <?php
 
 require_once "privilegeduser.php";
@@ -165,7 +156,3 @@ include __DIR__ . "/../../templates/layout_alt.html.php";
 
 
 ?>
-
-
-</body>
-</html>

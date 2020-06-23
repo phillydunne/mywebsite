@@ -1,7 +1,11 @@
 body {
-  background-color: lightblue;
+  background-color: lightgreen;
   text-align:center;
   font-family: Arial, Helvetica, sans-serif; 
+}
+
+.error {
+		color: #FF0000;
 }
 
 div {
@@ -32,10 +36,10 @@ table, th, td {
 
 
 table {
-	border-spacing: 15px;
+	border-spacing: 2.5px;
 }
 
-ul {
+ul.navbar {
 	list-style-type: none;
 	margin:0;
 	padding:0;
@@ -43,13 +47,13 @@ ul {
   	background-color: #333;
 }
 
-li {
+li.navbar {
 	float:left;
 	width:auto;
 	/*margin:auto;*/ /*NO effect*/
 }
 
-li a {
+li a.navbar {
 	display:block;
 	color:white;
 	text-align: center;
@@ -60,6 +64,10 @@ li a {
 
 footer {
 	position: fixed;
+	display:block;
+	background-color: white;
+	border:1px solid black;
+	padding:2px;
   	left: 0;
   	bottom: 0;
   	width: 100%;

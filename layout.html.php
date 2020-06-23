@@ -7,17 +7,17 @@
 	</head>
 	<body>
 		<header>
-			<h1>My Booking System</h1>
+			<h1>Booking System</h1>
 		</header>
-		<ul>
-			<li>
-				<a href="dashboard.php">Dashboard</a>
+		<ul class="navbar">
+			<li class="navbar">
+				<a class="navbar" href="dashboard.php">Dashboard</a>
 			</li>
-			<li>
-				<a href="booking.php">Booking</a>
+			<li class="navbar">
+				<a class="navbar" href="booking.php">Booking</a>
 			</li>
-			<li>
-				<a href="logout.php">Logout</a>
+			<li class="navbar">
+				<a class="navbar" href="logout.php">Logout</a>
 			</li>
 		</ul>
 		<main>

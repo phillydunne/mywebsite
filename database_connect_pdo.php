@@ -15,20 +15,23 @@ function database_connect_pdo($dbname) {
 
 	// Create connection
 	try {
-		$pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbusername, $dbpassword);
-			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-			$output = "Connected successfully to the database";
+		$conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbusername, $dbpassword);
+			$conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+			//$output = "Connected successfully to the database";
 			
-			$title="Database Connect Test";
-			include __DIR__ . "/../../templates/layout.html.php";
+			//$title="Database Connect Test";
+			//include __DIR__ . "/../../templates/layout.html.php";
 			
-			return $pdo; // if you move this into try the rest of the code wont be executed, so moving it all up.
+			// echo gettype($conn);
+			// echo var_dump($conn);
+
+			return $conn; // if you move this into try the rest of the code wont be executed, so moving it all up.
 
 	} catch (PDOException $e) {
-		$output = "Unable to connect to the database: " . 
+		echo "Unable to connect to the database: " . 
 		$e->getMessage() . ' in ' .
 		$e->getFile() . ' : ' . $e->getLine();
-		include __DIR__ . "/../../templates/layout.html.php";
+		//include __DIR__ . "/../../templates/layout.html.php";
 		return FALSE;
 	}
 
