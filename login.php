@@ -62,10 +62,6 @@ function test_input($data) {
 
 
 
-
-
-
-<!-- Javascript to show/hide password -->
 <script>
 function myFunction() {
   var x = document.getElementById("password");
@@ -78,28 +74,8 @@ function myFunction() {
 </script>
 
 
-<?php
-//Outputs the form values back to the user
-/*echo "<h2>Your Input:</h2>";
 
-if (!empty($email)) {
-  echo 'Email: ' . $email;
-  echo "<br>";
-}
-  
-if (!empty($password)) {
-  echo 'Password: Not Displayed';
-  echo "<br>";
-}
-
-echo '<br><br>'*/
-?>
-
-
-<!-- Submit the values to another page for processing if there are no errors -->
 <?php 
-//Ensure this executes after the validation block. This first If checks if the page has been submitted first - basically it checks if the submit event has taken place. Without this you would have to say If (variable <> Empty) AND if variableErr ="".
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -112,28 +88,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // start the session
       session_start();
 
-      // set fout session variable to the current time
-      $_SESSION["timeout"]=time();
+      // set session variable to the current time
+      $_SESSION["timeout"]=time();      
 
-      // set the email session variable
-      $_SESSION["email"]=$email;
-
-      // ? i suppose i could just keep whether a user is authenticated in a session variable too. couldnt really keep a list of roles and permissions though. Although was the intention to keep the PrivUser object through the application? 
-      
-      
       // check if the user has a specific privilege and then take action.
-      $set_permission = "all_permissions";
+      $set_permission = "view_dashboard"; // this is the permissin required to proceed for example 
       $u = PrivilegedUser::getByUsername("$email");
+      
       if(gettype($u)=="object") {
+      // set the user id and club_id session variable now that we have it
+        $_SESSION["email"]=$u->email;
+        $_SESSION["user_id"]=$u->user_id;
+        $_SESSION["club_id"]=$u->club_id;
+
+
         if ($u->hasPrivilege($set_permission)) {
           echo "<br> user " . $u->email . " has this permission: " . $set_permission;
             header("Location: dashboard.php");
+            die();
         } else {
           echo "<br> user " . $u->email . " does not have permission " . $set_permission;
         }
 
       } else {
     echo "The user object instance is not an object, it is likely a bool - the getByUsername function call returned a bool";
+    header("Location: logout.php");
 }
 
 
@@ -146,8 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //DEBUG echo "Inner Else: The POST method has been invoked, BUT there are errors";
     }
   } else {
-    //DEBUG echo "Outer Else: The POST method has NOT invoked";
-
+    // NOTHING HAS BEEN POSTED YET
   }
 
 

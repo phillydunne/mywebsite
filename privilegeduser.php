@@ -47,11 +47,12 @@ class PrivilegedUser extends User
             $privUser->firstname = $row["firstname"];
             $privUser->lastname = $row["lastname"];
             $privUser->email = $row["email"];
-            $privUser->password = $row["password"]; 
+            $privUser->password = $row["password"];
+            $privUser->club_id = $row["club_id"]; 
             $privUser->initRoles($privUser->user_id);
             return $privUser;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -164,7 +165,7 @@ public static function isAuthenticated($email) {
     } elseif (($result == TRUE) and ($result->num_rows > 1)) {
         echo "WARNING: there is more than one record with that email address.";
     } else {
-        return FALSE;
+        return FALSE; // no row returned for example
     }
 
 }

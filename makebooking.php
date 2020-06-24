@@ -1,8 +1,10 @@
 <?php
+session_start();
 require_once "database_connect_pdo.php";
 
 //variables
-$user_id=2; // set to this for now - will replace with session variable
+$user_id=$_SESSION["user_id"];
+
 
 
 $db_name="test";
@@ -22,7 +24,7 @@ try {
 	$stmt->execute();
 	$conn = NULL;
 	header("Location: booking.php?date=". date("Y-m-d",strtotime($_POST['start_time'])));
-
+	// left out the die() for now as it might interfere with the try catch.
 
 } catch (PDOException $e) {
 	echo "Error retrieving data from the database: " . 

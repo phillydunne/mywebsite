@@ -10,7 +10,7 @@
 			<?=$output?>
 		</main> 
 		<footer>
-			&copy; ACME INC 2020
+			&copy; Philip Dunne 2020
 		</footer>
 	</body>
 </html>

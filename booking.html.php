@@ -4,7 +4,7 @@
 				<input type="date" id="date" name="date" value="<?=$date?>">
 				<!-- <input type="text" id="name" name="name" value=""> -->
 				<input type="submit" name="submit" value="Submit">
-				<br><span class="error"><?=$dateError?></span>
+				<span class="error"><?=$dateError?></span>
 			</form>
 		</div>
 

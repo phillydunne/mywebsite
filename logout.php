@@ -1,12 +1,3 @@
-<!DOCTYPE HTML>  
-<html>
-<head>
-<style>
-.error {color: #FF0000;}
-</style>
-</head>
-<body>  
-
 <h1>Logout Page</h1>
 
 <?php
@@ -19,7 +10,7 @@ require_once "privilegeduser.php";
 $title=$output="";
 
 if (isset($_SESSION["email"])) {
-	if (PrivilegedUser::unAuthenticateUser($_SESSION["email"]) && session_destroy()) {
+	if (PrivilegedUser::unAuthenticateUser($_SESSION["email"]) && session_unset()) {
 		echo "<p>Logout completed successfully. Have a nice day :)<p>";
 	} else {
 		echo "<p>WARNING: to logger, this user has not been logged out successfully - highest priority.</p>";

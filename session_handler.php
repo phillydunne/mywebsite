@@ -20,11 +20,9 @@ if (isset($_SESSION["timeout"])) {
     
     if ($elapsed_time > $inactive_limit) {
         PrivilegedUser::unAuthenticateUser($_SESSION["email"]);
-        session_unset();
-        //session_destroy(); // removing this temporarily
-        //header("Location: logout.php");
         $output ="<p>Your session has expired</p>";
         header("Location: logout.php");
+        die();
     
     } else {
     
@@ -41,6 +39,7 @@ if (isset($_SESSION["timeout"])) {
 } else {
     $output = "<p>A timeout session variable is not set, please login.</p>";
     header("Location: logout.php");
+    die();
 
     // set the timeout session
     //$_SESSION["timeout"]=time();

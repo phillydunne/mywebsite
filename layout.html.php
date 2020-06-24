@@ -8,23 +8,23 @@
 	<body>
 		<header>
 			<h1>Booking System</h1>
+			<ul class="navbar">
+				<li class="navbar">
+					<a class="navbar" href="dashboard.php">Dashboard</a>
+				</li>
+				<li class="navbar">
+					<a class="navbar" href="booking.php">Booking</a>
+				</li>
+				<li class="navbar">
+					<a class="navbar" href="logout.php">Logout</a>
+				</li>
+			</ul>
 		</header>
-		<ul class="navbar">
-			<li class="navbar">
-				<a class="navbar" href="dashboard.php">Dashboard</a>
-			</li>
-			<li class="navbar">
-				<a class="navbar" href="booking.php">Booking</a>
-			</li>
-			<li class="navbar">
-				<a class="navbar" href="logout.php">Logout</a>
-			</li>
-		</ul>
 		<main>
 			<?=$output?>
 		</main> 
 		<footer>
-			&copy; ACME INC 2020
+			&copy; Philip Dunne 2020
 		</footer>
 	</body>
 </html>

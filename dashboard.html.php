@@ -1,21 +1,3 @@
-		<style>
-			.error {color: #FF0000;}
-		    .button {
-		      border: none;
-		      color: black;
-		      padding: 15px 32px;
-		      text-align: center;
-		      text-decoration: none;
-		      display: inline-block;
-		      font-size: 16px;
-		      margin: 4px 2px;
-		      cursor: pointer;
-		    }
-
-		    .button1 {background-color: #4CAF50;} /* Green */
-		    .button2 {background-color: #008CBA;} /* Blue */
-		</style>
-
 		<div>
 			<table>
 				<tr>
@@ -34,10 +16,10 @@
 
 		<div>
 			<h3>What would you like to do next?</h3>
-	        <form method=POST action='newquote.php'>
-	            <input type='submit' name='new_quote' value='Create a New Quote'>
+	        <form method=POST action='booking.php'>
+	            <input type='submit' name='new_quote' value='New Booking'>
 	        </form>
-	        <button class='button button1' onclick='myFunction()' id='button1'>Logout</button>
+	        <!-- <button class='button button1' onclick='myFunction()' id='button1'><a href="booking.php" style="display: block"></a></button> -->
 	    </div>
 
 

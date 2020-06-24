@@ -1,7 +1,22 @@
 <?php
-include "database_connect_pdo.php";
-require_once "club.php";
+session_start();
 
+require_once "database_connect_pdo.php";
+require_once "database_connect.php";
+require_once "club.php";
+require_once "privilegeduser.php";
+require_once "role.php";
+require_once "auth_session.php";
+
+
+//initalise
+$page_permission="make_booking";
+
+// AUTHENTICATION, AUTHORISATION & SESSION TIMEOUT 
+auth_session($page_permission);
+
+
+// NOW WE CAN EXECUTE PAGE LOGIC
 // Declare empty variables
 $output=$title="";
 $dateError="";
@@ -25,7 +40,9 @@ if (!isset($_GET["date"])) {
 
 
 	if ($_SERVER["REQUEST_METHOD"]=="POST") { // this will be TRUE if someone changes the date and clicks submit.
-		if (empty($_POST["date"])) {
+		if (!isset($_POST["date"])) {
+			// Do nothing
+		} elseif (empty($_POST["date"])) {
 			$dateError = "date is required";
 		} else { 
 			$date=test_input($_POST["date"]);
@@ -37,6 +54,7 @@ if (!isset($_GET["date"])) {
 			// }
 		}
 	} else {
+		// This should never really run anymore as you cant come to this page without posting from another page.
 		// If there has not yet been a POST which posts to this page this will run.
 		//DEBUG echo "In no POST posted, so lets set a date<br>";
 		$date=date("Y-m-d"); //Set the date today. Need to check out timezone.
@@ -67,7 +85,7 @@ if ($conn==FALSE) {
 
 //var_dump($conn);
 
-$club_id='1'; // this would be taken from the user profile. can use it with quotes or without.
+$club_id=$_SESSION["club_id"];
 
 try {
 	// PART 1: Retrieve Club information and put it in a Club object
@@ -111,11 +129,6 @@ try {
 
 	$booked=FALSE;
 
-	// STAGE 5: Once the page has been reloaded with a new date - use that date.
-
-
-
- 
 
 	// PART 4 : Print it all
 	// NB: Ensure that the open time and close time are using values of epoch time that relate to the day that is being queried.
@@ -135,10 +148,6 @@ try {
 }
 
 
-
-
-
-
 ?>
 
 <script>    
@@ -146,22 +155,5 @@ try {
         window.history.pushState({}, "Hide", '<?php echo $_SERVER['PHP_SELF'];?>');
     }
 </script>
-
- <!-- Javascript timer testing: this should really be in a .html.php file -->
-
-<!-- <p>A script on this page runs this clock:</p>
-<p id="demo"></p>
-
-<script>
-	var myVar = setInterval(myTimer,1000);
-
-	function myTimer() {
-		var d = new Date();
-		document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-	}
-	
-	
-</script>
- -->
 
 
