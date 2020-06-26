@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once "database_connect_pdo.php";
-require_once "database_connect.php";
-require_once "club.php";
-require_once "privilegeduser.php";
-require_once "role.php";
-require_once "auth_session.php";
+require_once __DIR__ . "/../../includes/database_connect_pdo.php";
+require_once __DIR__ . "/../../includes/database_connect.php";
+require_once __DIR__ . "/../../includes/club.php";
+require_once __DIR__ . "/../../includes/privilegeduser.php";
+require_once __DIR__ . "/../../includes/role.php";
+require_once __DIR__ . "/../../includes/auth_session.php";
 
 
 //initalise
@@ -26,6 +26,11 @@ $offset=0;
 $date=date("Y-m-d"); //Need to check out timezone.
 $start_time=strtotime($date);
 $end_time=$start_time+(60*60*24);
+
+// Initialise
+$booked=$myBooking=false;
+$numBookings=0; // Initial number of bookings that day for a user.
+$alertFlag=0;
 //echo $start_time . "<br>" . $end_time;
 
 function test_input($data) {
@@ -103,18 +108,31 @@ try {
 
 
 
-	// PART 3: Retrieve bookings and put them in an associative array
+	// PART 3: Retrieve active bookings and put them in an associative array
 	//convert the booking window into human readable to query the database
 	$start_time=date("Y-m-d H:i:s",$start_time);
 	$end_time=date("Y-m-d H:i:s",$end_time);
 
-	$stmt3=$conn->prepare("SELECT * FROM `bookings` WHERE `club_id`=:club_id AND `start_time`> :start_time AND `end_time` < :end_time");
+	$stmt3=$conn->prepare("SELECT * FROM `bookings` WHERE `club_id`=:club_id AND `start_time`> :start_time AND `end_time` < :end_time AND `cancelled` = 0");
 
 	$stmt3->bindParam(':club_id', $club_id);
 	$stmt3->bindParam(':start_time', $start_time);
 	$stmt3->bindParam(':end_time', $end_time);
 	$stmt3->execute();
-	$myBookings=$stmt3->fetchAll(PDO::FETCH_ASSOC);
+	$daysBookings=$stmt3->fetchAll(PDO::FETCH_ASSOC);
+
+
+	// check if the max number of bookings has been reached
+	foreach ($daysBookings as $booking) {
+		if ($booking["user_id"]==$_SESSION["user_id"]) {
+			$numBookings++;
+		}
+	}
+
+	if ($numBookings>=$_SESSION["max_bookings"]) {
+		$alert="Max number of bookings (" . $_SESSION["max_bookings"] . ") per day has been reached, please cancel an existing booking if you want to book again today.";
+		$alertFlag=1;
+	}
 
 
 	//echo var_dump($myBookings);
@@ -126,8 +144,6 @@ try {
 	// $open_time=date("H:i",$open_time); // converts back to human readable time, NB: with todays date we will need to manipulate this to be another day's date if that is the day we are displaying.
 
 	// echo $open_time . "<br>" . $close_time . "<br>" . $myClub->block_size;
-
-	$booked=FALSE;
 
 
 	// PART 4 : Print it all

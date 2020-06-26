@@ -2,8 +2,8 @@
 
 <?php
 session_start();
-require_once "database_connect.php";
-require_once "privilegeduser.php";
+require_once __DIR__ . "/../../includes/database_connect.php";
+require_once __DIR__ . "/../../includes/privilegeduser.php";
 
 
 //initialise variables

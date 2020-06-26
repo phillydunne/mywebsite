@@ -132,7 +132,7 @@ echo '<br><br>'
 echo "<h2>Submit Data to the Database function:</h2>";
 
 // include a function which connects to the database and returns the database connection ?object
-include 'database_connect.php';
+require_once __DIR__ . "/../../includes/database_connect.php";
 
 // define the target database. The database server, database username and database password and specified in the function.
 $dbname="test";

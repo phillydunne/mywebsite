@@ -8,6 +8,7 @@ class User
 	private $email;
 	private $password;
 	private $authenticated;
+  private $club_id;
 
 
     public function __construct() {
@@ -17,10 +18,11 @@ class User
         $this->email=NULL;
         $this->password=NULL;
         $this->authenticated=FALSE;
+        $this->club_id=NULL;
     }
 
     // Add a new user account and return the user id if successful
-    public function addUser($firstname, $lastname, $email, $hashed_password) {
+    public function addUser($firstname, $lastname, $email, $hashed_password, $club_id) {
 
    	$log_level = "";
 
@@ -58,7 +60,7 @@ class User
         $conn->close();
     	die();
     } else {
-    	$sql = "INSERT INTO users (email, password, firstname, lastname) VALUES ('$email', '$hashed_password', '$firstname', '$lastname')";
+    	$sql = "INSERT INTO users (email, password, firstname, lastname, club_id) VALUES ('$email', '$hashed_password', '$firstname', '$lastname', '$club_id')";
 
 	    if($conn->query($sql) === TRUE) {
 	      echo "<br>New user created successfully!<br>";

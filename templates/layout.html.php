@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<header>
+		<!-- <header>  Having the header in there moved it all across to the left-->
 			<h1>Booking System</h1>
 			<ul class="navbar">
 				<li class="navbar">
@@ -19,7 +19,7 @@
 					<a class="navbar" href="logout.php">Logout</a>
 				</li>
 			</ul>
-		</header>
+		<!-- </header> -->
 		<main>
 			<?=$output?>
 		</main> 

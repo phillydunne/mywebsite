@@ -2,15 +2,21 @@
 class Role
 {
     protected $permissions;
-    public $role_name;
+    protected $config;
 
     protected function __construct() {
         $this->permissions = array();
+        $this->config = array();
     }
 
     // returns a role object with associated permissions (the keys) and true (the value) stored in an array called permissions = array("perm_desc_1"->"true"...) 
     public static function getRolePerms($role_id) {
+        
+        // Step 1: Create the role object
         $role = new Role();
+        
+
+        // Step 2: Populate the permissions array
         $sql = "SELECT t2.perm_desc FROM role_perm as t1
                 JOIN permissions as t2 ON t1.perm_id = t2.perm_id
                 WHERE t1.role_id = '$role_id'";
@@ -19,21 +25,30 @@ class Role
         $conn = database_connect($dbname);
 
         $result = $conn->query($sql);
-        $conn->close();
-
-        /*$sth = $GLOBALS["DB"]->prepare($sql);
-        $sth->execute(array(":role_id" => $role_id));*/
-
+        
         while($row = $result->fetch_assoc()) {
             $role->permissions[$row["perm_desc"]] = true;
         }
+
+
+        // Step 3: Populate the config array
+        $sql = "SELECT max_bookings FROM roles
+                WHERE role_id = '$role_id'";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch_assoc()) {
+            $role->config["max_bookings"] = $row["max_bookings"];
+        }
+
+        $conn->close();
+
+        // Populate the role object with the two arrays populated
         return $role;
     }
 
 
     // a function to create a new role, returns the role_id of the newly created role.
     public static function addRole($role_name) {
-        //$this->role_name = $role_name; // ?necessary 
         $dbname="test";
         $conn = database_connect($dbname);
 
@@ -83,4 +98,10 @@ class Role
     public function hasPerm($permission) {
         return isset($this->permissions[$permission]);
     }
+
+    // check a config value
+    public function getConfig($config) {
+        return $this->config[$config];
+    }
+
 }

@@ -1,8 +1,13 @@
 <?php
 
-require_once "privilegeduser.php";
-require_once "role.php";
-require_once "database_connect.php";
+require_once __DIR__ . "/../../includes/privilegeduser.php";
+require_once __DIR__ . "/../../includes/role.php";
+require_once __DIR__ . "/../../includes/database_connect.php";
+
+
+// require_once "privilegeduser.php";
+// require_once "role.php";
+// require_once "database_connect.php";
 
 // define variables and set to empty values
 $title="";
@@ -60,6 +65,10 @@ function test_input($data) {
   <input type="submit" name="submit" value="Submit">  
 </form>
 
+<div>
+  <a href="userregistration.php">New user? Register here.</a>
+</div>
+
 
 
 <script>
@@ -83,23 +92,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // attempt to authenticate the user, returns true if user authentication flag has been updated, false if not.
     if (PrivilegedUser::authenticateUser($email, $password)==TRUE) {
-      echo "<br>User " . $email . " has been authenticated!<br>";
       
       // start the session
       session_start();
 
       // set session variable to the current time
-      $_SESSION["timeout"]=time();      
+      $_SESSION["timeout"]=time(); // Important that this is as soon as possible after authentication. 
 
       // check if the user has a specific privilege and then take action.
       $set_permission = "view_dashboard"; // this is the permissin required to proceed for example 
       $u = PrivilegedUser::getByUsername("$email");
-      
+
       if(gettype($u)=="object") {
       // set the user id and club_id session variable now that we have it
         $_SESSION["email"]=$u->email;
         $_SESSION["user_id"]=$u->user_id;
         $_SESSION["club_id"]=$u->club_id;
+        $_SESSION["max_bookings"]=$u->getConfig("max_bookings"); // Probably not an ideal place to store this - should we be loading user information into a session variable?
 
 
         if ($u->hasPrivilege($set_permission)) {
@@ -107,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: dashboard.php");
             die();
         } else {
-          echo "<br> user " . $u->email . " does not have permission " . $set_permission;
+          echo "However you have not yet been assigned a role by an admin. Please contact contact@bookings.com if you do not have access withing 24 hours";
         }
 
       } else {
@@ -131,6 +140,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $title = "Login";
 include __DIR__ . "/../../templates/layout_alt.html.php";
-
 
 ?>

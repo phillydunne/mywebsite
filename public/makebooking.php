@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "database_connect_pdo.php";
+require_once __DIR__ . "/../../includes/database_connect_pdo.php";
 
 //variables
 $user_id=$_SESSION["user_id"];

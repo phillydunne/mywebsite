@@ -9,8 +9,8 @@ function database_connect($dbname) {
 	$username = "root";
 
 	//read in database credentials
-	$dbpassword = fopen("config.txt", "r") or die("unable to open file");
-	$dbpassword = fread($dbpassword, filesize("config.txt"));
+	$dbpassword = fopen(__DIR__ . "/../configs/config.txt", "r") or die("unable to open file");
+	$dbpassword = fread($dbpassword, filesize(__DIR__ . "/../configs/config.txt"));
 
 
 	// Create connection
