@@ -11,8 +11,8 @@
 
 session_start();
 
-require_once __DIR__ . "/../../includes/role.php";
-require_once __DIR__ . "/../../includes/database_connect.php";
+require_once __DIR__ . "/../includes/role.php";
+require_once __DIR__ . "/../includes/database_connect.php";
 
 // define variables and set to empty values
 $role_nameErr = $role_descErr = "";

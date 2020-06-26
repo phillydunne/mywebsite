@@ -2,8 +2,8 @@
 
 <?php
 session_start();
-require_once __DIR__ . "/../../includes/database_connect.php";
-require_once __DIR__ . "/../../includes/privilegeduser.php";
+require_once __DIR__ . "/../includes/database_connect.php";
+require_once __DIR__ . "/../includes/privilegeduser.php";
 
 
 //initialise variables
@@ -29,6 +29,6 @@ if (isset($_SESSION["email"])) {
 <?php
 
 $title = "Logout";
-include __DIR__ . "/../../templates/layout_alt.html.php";
+include __DIR__ . "/../templates/layout_alt.html.php";
 
 ?>

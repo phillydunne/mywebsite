@@ -2,8 +2,8 @@
 
 session_start();
 
-require_once __DIR__ . "/../../includes/user.php";
-require_once __DIR__ . "/../../includes/database_connect.php";
+require_once __DIR__ . "/../includes/user.php";
+require_once __DIR__ . "/../includes/database_connect.php";
 
 
 // define variables and set to empty values
@@ -150,6 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 $title="User Registration";
-include __DIR__ . "/../../templates/layout_alt.html.php";
+include __DIR__ . "/../templates/layout_alt.html.php";
 
 ?>

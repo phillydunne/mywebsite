@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . "/../../includes/database_connect_pdo.php";
+include __DIR__ . "/../includes/database_connect_pdo.php";
 
 //variables
 

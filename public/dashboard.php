@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require_once __DIR__ . "/../../includes/database_connect.php";
-require_once __DIR__ . "/../../includes/database_connect_pdo.php";
-require_once __DIR__ . "/../../includes/privilegeduser.php";
-require_once __DIR__ . "/../../includes/role.php";
-require_once __DIR__ . "/../../includes/auth_session.php";
+require_once __DIR__ . "/../includes/database_connect.php";
+require_once __DIR__ . "/../includes/database_connect_pdo.php";
+require_once __DIR__ . "/../includes/privilegeduser.php";
+require_once __DIR__ . "/../includes/role.php";
+require_once __DIR__ . "/../includes/auth_session.php";
 
 //initalise
 $title=$output="";
@@ -33,10 +33,10 @@ if (empty($myBookings)) {
 }
 
 ob_start();
-include __DIR__ . "/../../templates/dashboard.html.php";
+include __DIR__ . "/../templates/dashboard.html.php";
 $output = $output . ob_get_clean();
 
 $title="Dashboard";
-include __DIR__ . "/../../templates/layout.html.php";
+include __DIR__ . "/../templates/layout.html.php";
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../../includes/privilegeduser.php";
-require_once __DIR__ . "/../../includes/role.php";
-require_once __DIR__ . "/../../includes/database_connect.php";
+require_once __DIR__ . "/../includes/privilegeduser.php";
+require_once __DIR__ . "/../includes/role.php";
+require_once __DIR__ . "/../includes/database_connect.php";
 
 
 // require_once "privilegeduser.php";
@@ -139,6 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 $title = "Login";
-include __DIR__ . "/../../templates/layout_alt.html.php";
+include __DIR__ . "/../templates/layout_alt.html.php";
 
 ?>

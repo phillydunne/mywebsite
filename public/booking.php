@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once __DIR__ . "/../../includes/database_connect_pdo.php";
-require_once __DIR__ . "/../../includes/database_connect.php";
-require_once __DIR__ . "/../../includes/club.php";
-require_once __DIR__ . "/../../includes/privilegeduser.php";
-require_once __DIR__ . "/../../includes/role.php";
-require_once __DIR__ . "/../../includes/auth_session.php";
+require_once __DIR__ . "/../includes/database_connect_pdo.php";
+require_once __DIR__ . "/../includes/database_connect.php";
+require_once __DIR__ . "/../includes/club.php";
+require_once __DIR__ . "/../includes/privilegeduser.php";
+require_once __DIR__ . "/../includes/role.php";
+require_once __DIR__ . "/../includes/auth_session.php";
 
 
 //initalise
@@ -149,11 +149,11 @@ try {
 	// PART 4 : Print it all
 	// NB: Ensure that the open time and close time are using values of epoch time that relate to the day that is being queried.
 	ob_start();
-	include __DIR__ . "/../../templates/booking.html.php";
+	include __DIR__ . "/../templates/booking.html.php";
 	$output=ob_get_clean();
 
 	$title="Bookings";
-	include __DIR__ . "/../../templates/layout.html.php";
+	include __DIR__ . "/../templates/layout.html.php";
 
 
 } catch (PDOException $e) {
