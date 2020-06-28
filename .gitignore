@@ -1,6 +1,4 @@
 #ignore config with environment variables
-config.txt
-test_config.txt
 sandbox.php
 sandbox.html.php
 calendartest.php
