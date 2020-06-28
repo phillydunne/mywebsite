@@ -16,7 +16,7 @@ chmod 666 config.txt
 
 # inject database password
 #-------------------------
-sed -i.bak "s/<password>/$(cat /home/bitnami/bitnami_application_password)/;" /opt/bitnami/apache2/configs/config.txt
+sed -i.bak "s/<password>/$(cat /home/bitnami/bitnami_application_password)/;" /opt/bitnami/apache2/htdocs/configs/config.txt
 
 # create database
 #-----------------
