@@ -24,7 +24,7 @@ if (isset($_SESSION["email"])) {
 ?>
 
 <br>Click here to proceed to the 
-<a href="Login.php"> Login Page</a>
+<a href="login.php"> Login Page</a>
 
 <?php
 
